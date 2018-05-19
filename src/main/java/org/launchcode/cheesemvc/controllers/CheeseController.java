@@ -48,18 +48,18 @@ public class CheeseController {
 
     // Request path: cheese/remove
     @RequestMapping(value = "remove", method = RequestMethod.GET)
-    public String displayRemoveCheeseForm(Model model) {
-
+    public String showRemoveForm(Model model) {
         model.addAttribute("title", "Remove Cheese");
+        model.addAttribute("cheeses", cheeses);
         return "cheese/remove";
     }
 
     // Request path: cheese/remove
     @RequestMapping(value="remove", method = RequestMethod.POST)
-    public String removeCheeseForm(@RequestParam String cheeseName) {
-        cheeses.get(cheeseName);
-        cheeses.remove(cheeseName);
-
+    public String removeCheeseForm(@RequestParam ArrayList<String> cheese) {
+        for(String c : cheese) {
+            cheeses.remove(c);
+        }
         // Redirect to cheese/
         return "redirect:";
     }
