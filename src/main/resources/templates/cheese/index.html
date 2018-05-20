@@ -5,12 +5,22 @@
     <h1 th:text="${title}"></h1>
     <nav th:replace="fragments :: navigation"></nav>
 
-    <p th:unless="${cheeses} and ${cheeses.size()}">no cheese :(</p>
+    <h1 th:unless="${cheeses} and ${cheeses.size()}">no cheese yet :(</h1>
 
-
-    <li th:each="cheese : ${cheeses}" >
-        <ul th:text="${cheese.key + ': ' + cheese.value}">Cheese</ul>
-    </li>
+    <table class="cheese">
+        <thead>
+            <tr class="header">
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="row" th:each="cheese : ${cheeses}" >
+                <td th:text="${cheese.name}"></td>
+                <td th:text="${cheese.description}"></td>
+            </tr>
+        </tbody>
+    </table>
 
 </body>
 </html>
