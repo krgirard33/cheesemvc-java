@@ -4,11 +4,7 @@ import org.launchcode.cheesemvc.models.Cheese;
 import org.launchcode.cheesemvc.models.CheeseData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import java.util.ArrayList;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by LaunchCode
@@ -24,6 +20,7 @@ public class CheeseController {
 
         model.addAttribute("cheeses", CheeseData.getAll());
         model.addAttribute("title", "My Cheeses");
+        //show index
         return "cheese/index";
     }
 
@@ -32,6 +29,7 @@ public class CheeseController {
     public String displayAddCheeseForm(Model model) {
 
         model.addAttribute("title", "Add Cheese");
+        // Show add
         return "cheese/add";
     }
 
@@ -50,6 +48,7 @@ public class CheeseController {
     public String showRemoveForm(Model model) {
         model.addAttribute("title", "Remove Cheese");
         model.addAttribute("cheeses", CheeseData.getAll());
+        // show remove
         return "cheese/remove";
     }
 
@@ -62,5 +61,21 @@ public class CheeseController {
         // Redirect to cheese/
         return "redirect:";
     }
+    // Request path: cheese/edit
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
+    public  String displayEditForm(Model model, @PathVariable int cheeseId) {
+        Cheese getACheese = CheeseData.getById(cheeseId);
+        model.addAttribute("cheese", getACheese);
+        // Show cheese/edit
+        return "cheese/edit";
+    }
 
+    @RequestMapping(value="edit/{cheeseId}", method = RequestMethod.POST)
+    public String processEditForm(int cheeseId, String name, String description) {
+        Cheese cheeseToEdit = CheeseData.getById(cheeseId);
+        cheeseToEdit.setName(name);
+        cheeseToEdit.setDescription(description);
+        // Redirect to cheese/
+        return "redirect:/cheese";
+    }
 }

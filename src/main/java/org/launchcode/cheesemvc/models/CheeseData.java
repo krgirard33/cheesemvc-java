@@ -22,8 +22,8 @@ public class CheeseData {
     //getId
     public static Cheese getById(int id) {
         Cheese theCheese = null;
-        for (Cheese canidateCheese : cheeses) {
-            theCheese = canidateCheese;
+        for (Cheese candidateCheese : cheeses) {
+            theCheese = candidateCheese;
         }
         return theCheese;
     }
