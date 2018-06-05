@@ -23,7 +23,8 @@ public class CheeseData {
     public static Cheese getById(int id) {
         Cheese theCheese = null;
         for (Cheese candidateCheese : cheeses) {
-            theCheese = candidateCheese;
+            if (candidateCheese.getCheeseId() == id)
+                theCheese = candidateCheese;
         }
         return theCheese;
     }

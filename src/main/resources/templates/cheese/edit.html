@@ -7,7 +7,7 @@
     <h1>Edit Cheese:
         <span th:text="${cheese.name}+' (id='+${cheese.cheeseId}+')'"></span>
     </h1>
-    <form method="post" action="">
+    <form method="post" action="" style="">
         <input type="hidden" th:value="${cheese.cheeseId}" name="cheeseId" />
         <div class="input">
             <label for="name-field">Name</label>
@@ -17,7 +17,7 @@
         <div class="input">
             <label for="description-field">Description</label>
             <br />
-            <textarea rows="4" cols="50" name="description" id="description-field" th:text="${cheese.description}"/>
+            <input type="text" id="description-field" name="description" th:value="${cheese.description}" />
         </div>
         <div class="submit">
             <input type="submit" value="Edit Cheese" />
