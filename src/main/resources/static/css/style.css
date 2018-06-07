@@ -42,3 +42,15 @@ div.navigation {
     margin: 10px;
     padding: 10px;
 }
+input {
+    width:100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    }
+label {
+    margin: 20px 0;
+    font-size: 25px;
+    }
+.error {
+    color: #ff0000;
+    }
