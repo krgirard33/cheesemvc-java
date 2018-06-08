@@ -25,6 +25,7 @@
             <select name="type" th:select="*{cheeseType}">
                 <option th:each="cheeseType : ${cheeseTypes}"
                         th:text="${cheeseType.name}"
+                        th:selected="(${cheeseType.name == ${cheese.type.name})"
                         th:value="${cheeseType}">
                 </option>
             </select>
