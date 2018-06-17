@@ -5,10 +5,10 @@
     <h1 th:text="${title}"></h1>
     <nav th:replace="fragments :: navigation"></nav>
     <h1>Edit Cheese:
-        <span th:text="${cheese.name}+' (id='+${cheese.cheeseId}+')'"></span>
+        <span th:text="${cheese.name}+' (id='+${cheese.id}+')'"></span>
     </h1>
     <form method="post" action="" style="" th:object="${cheese}">
-        <input type="hidden" th:field="*{cheeseId}" name="cheeseId" />
+        <input type="hidden" th:field="*{id}" name="id" />
         <div class="form-group">
             <label for="name">Name</label>
             <br />

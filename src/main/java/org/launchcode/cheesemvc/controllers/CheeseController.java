@@ -1,15 +1,15 @@
 package org.launchcode.cheesemvc.controllers;
 
 import org.launchcode.cheesemvc.models.Cheese;
-import org.launchcode.cheesemvc.models.CheeseData;
 import org.launchcode.cheesemvc.models.CheeseType;
+import org.launchcode.cheesemvc.models.data.CheeseDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.SocketTimeoutException;
 
 /**
  * Created by LaunchCode
@@ -19,11 +19,14 @@ import java.net.SocketTimeoutException;
 @RequestMapping(value = "cheese")
 public class CheeseController {
 
+    @Autowired
+    private CheeseDao cheeseDao;
+
     // Request path: cheese/
     @RequestMapping(value = "")
     public String index(Model model) {
 
-        model.addAttribute("cheeses", CheeseData.getAll());
+        model.addAttribute("cheeses", cheeseDao.findAll());
         model.addAttribute("title", "My Cheeses");
         //show index
         return "cheese/index";
@@ -48,19 +51,20 @@ public class CheeseController {
                                        Errors errors, Model model) {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Cheese");
+            model.addAttribute("cheeseTypes", CheeseType.values());
             // Show add
             return "cheese/add";
         }
-        CheeseData.add(newCheese);
+        cheeseDao.save(newCheese);
         // Redirect to cheese/
-        return "redirect:";
+        return "redirect:/cheese";
     }
 
     // Request path: cheese/remove
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String showRemoveForm(Model model) {
         model.addAttribute("title", "Remove Cheese");
-        model.addAttribute("cheeses", CheeseData.getAll());
+        model.addAttribute("cheeses", cheeseDao.findAll());
         // show remove
         return "cheese/remove";
     }
@@ -68,29 +72,29 @@ public class CheeseController {
     // Request path: cheese/remove
     @RequestMapping(value="remove", method = RequestMethod.POST)
     public String removeCheeseForm(@RequestParam int[] cheeseIds) {
-        for(int cheeseId : cheeseIds) {
-            CheeseData.remove(cheeseId);
+        for(int id : cheeseIds) {
+            cheeseDao.delete(id);
         }
         // Redirect to cheese/
-        return "redirect:";
+        return "redirect:/cheese";
     }
     // Request path: cheese/edit
-    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
-    public  String displayEditForm(Model model, @PathVariable int cheeseId) {
-        Cheese getACheese = CheeseData.getById(cheeseId);
+    @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
+    public  String displayEditForm(Model model, @PathVariable int id) {
+        Cheese getACheese = cheeseDao.findOne(id);
         model.addAttribute("cheese", getACheese);
-        System.out.print(getACheese);
+        model.addAttribute("cheeseTypes", CheeseType.values());
         // Show cheese/edit
         return "cheese/edit";
     }
 
-    @RequestMapping(value="edit/{cheeseId}", method = RequestMethod.POST)
-    public String processEditForm(int cheeseId, String name, String description) {
-        Cheese cheeseToEdit = CheeseData.getById(cheeseId);
+    @RequestMapping(value="edit/{id}", method = RequestMethod.POST)
+    public String processEditForm(int id, String name, String description, CheeseType type) {
+        Cheese cheeseToEdit = cheeseDao.findOne(id);
         cheeseToEdit.setName(name);
         cheeseToEdit.setDescription(description);
         //Added this
-        cheeseToEdit.setType(CheeseType.valueOf(name));
+        cheeseToEdit.setType(type);
         // Redirect to cheese/
         return "redirect:/cheese";
     }

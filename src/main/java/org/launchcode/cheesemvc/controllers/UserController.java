@@ -1,7 +1,5 @@
 package org.launchcode.cheesemvc.controllers;
 
-import org.launchcode.cheesemvc.models.Cheese;
-import org.launchcode.cheesemvc.models.CheeseData;
 import org.launchcode.cheesemvc.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

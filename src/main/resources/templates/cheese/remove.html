@@ -10,7 +10,7 @@
 
     <form method="post">
         <div th:each ="cheese : ${cheeses}" class="checkbox">
-            <input type="checkbox" name="cheeseIds" th:value="${cheese.cheeseId}" th:id="${cheese.cheeseId}"/>
+            <input type="checkbox" name="cheeseIds" th:value="${cheese.id}" th:id="${cheese.id}"/>
             <label th:text="${cheese.name}"></label>
         </div>
         <input type="submit" value="Remove"/>
